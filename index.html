@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Buscador de Especialistas</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <h2>Buscar Especialistas</h2>
+
+  <div class="search-box">
+
+    <!-- Departamentos -->
+    <div class="input-group">
+      <span class="material-icons">location_on</span>
+      <input type="text" id="departmentInput" placeholder="Departamento">
+      <div class="dropdown" id="departmentList"></div>
+    </div>
+
+    <!-- Ciudades -->
+    <div class="input-group disabled" id="cityGroup">
+      <span class="material-icons">map</span>
+      <input type="text" id="cityInput" placeholder="Ciudad" disabled>
+      <div class="dropdown" id="cityList"></div>
+    </div>
+
+    <!-- Especialidades -->
+    <div class="input-group">
+      <span class="material-icons">medical_services</span>
+      <input type="text" id="specialtyInput" placeholder="Especialidad">
+      <div class="dropdown" id="specialtyList"></div>
+    </div>
+
+    <button id="searchBtn">
+      <span id="search-icon" class="material-icons">search</span> Buscar
+    </button>
+
+  </div>
+
+  <div id="resultsContainer"></div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
