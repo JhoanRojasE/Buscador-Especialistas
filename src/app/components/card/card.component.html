@@ -1,0 +1,42 @@
+<div class="card" [class.clickable]="clickable" [class.single]="single">
+  <h3>
+    <span class="material-icons">medical_services</span>
+    {{ stats.titulo }}
+  </h3>
+
+  <p class="total">
+    <span class="material-icons">groups</span>
+    Total: {{ stats.total }}
+  </p>
+
+  <div class="stats-grid">
+    <p>
+      <span class="stat-label"><span class="material-icons">female</span> Mujeres</span>
+      <span class="stat-value">{{ stats.women }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">male</span> Hombres</span>
+      <span class="stat-value">{{ stats.men }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">check_circle</span> Activos</span>
+      <span class="stat-value">{{ stats.active }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">cancel</span> Inactivos</span>
+      <span class="stat-value">{{ stats.inactive }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">health_and_safety</span> EPS</span>
+      <span class="stat-value">{{ stats.eps }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
+      <span class="stat-value">{{ stats.ips }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">business</span> Consultorio</span>
+      <span class="stat-value">{{ stats.consultorio }}</span>
+    </p>
+  </div>
+</div>

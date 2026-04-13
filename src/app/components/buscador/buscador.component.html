@@ -1,0 +1,66 @@
+<div class="container">
+  <h2>Buscar Especialistas</h2>
+
+  <div class="search-box">
+    <div class="input-group">
+      <span class="material-icons">location_on</span>
+      <input type="text" placeholder="Departamento" [(ngModel)]="departmentInput"
+        (input)="onDeptInput()" (focus)="onDeptFocus()" />
+      <div class="dropdown" *ngIf="showDeptList && filteredDepartamentos.length">
+        <div *ngFor="let d of filteredDepartamentos" (click)="selectDept(d, $event)">{{ d }}</div>
+      </div>
+    </div>
+
+    <div class="input-group" [class.disabled]="cityDisabled">
+      <span class="material-icons">map</span>
+      <input type="text" placeholder="Ciudad" [(ngModel)]="cityInput"
+        [disabled]="cityDisabled" (input)="onCityInput()" (focus)="onCityFocus()" />
+      <div class="dropdown" *ngIf="showCityList && filteredCities.length">
+        <div *ngFor="let c of filteredCities" (click)="selectCity(c, $event)">{{ c }}</div>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <span class="material-icons">medical_services</span>
+      <input type="text" placeholder="Especialidad" [(ngModel)]="specialtyInput"
+        (input)="onSpecInput()" (focus)="onSpecFocus()" />
+      <div class="dropdown" *ngIf="showSpecList && filteredSpecialties.length">
+        <div *ngFor="let s of filteredSpecialties" (click)="selectSpec(s, $event)">{{ s }}</div>
+      </div>
+    </div>
+
+    <button (click)="search()">
+      <span class="material-icons" style="color:white">search</span> Buscar
+    </button>
+  </div>
+
+  <div id="resultsContainer">
+    <div class="spinner" *ngIf="loading"></div>
+
+    <div class="cards" *ngIf="viewMode === 'grid'">
+      <div *ngFor="let item of groupedCards" (click)="selectCard(item)">
+        <app-card [stats]="item.stats" [clickable]="true"></app-card>
+      </div>
+    </div>
+
+    <ng-container *ngIf="viewMode === 'detail'">
+      <app-card [stats]="detailStats!" [single]="true"></app-card>
+
+      <h3 class="section-title">
+        <span class="material-icons">groups</span> Especialistas
+      </h3>
+
+      <div class="specialist-grid">
+        <div class="specialist-card" *ngFor="let s of detailList">
+          <h4>{{ s.titulo }} {{ s.nombre }}</h4>
+          <p>Edad: {{ s.edad }}</p>
+          <p>Experiencia: {{ s.experiencia }} años</p>
+          <p>Graduación: {{ s.graduacion }}</p>
+          <p>Tipo: {{ s.tipoAfiliacion }}</p>
+          <p>Afiliación: {{ s.afiliacion }}</p>
+          <p>Estado: {{ s.estado }}</p>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
