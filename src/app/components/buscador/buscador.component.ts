@@ -1,9 +1,10 @@
-import { Component, OnInit, HostListener, NgZone } from '@angular/core';
+// import { Component, OnInit, HostListener, NgZone, inject } from '@angular/core';
+import { Component, OnInit, HostListener, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EspecialistasService } from '../../services/especialistas.service';
 import { CardComponent } from '../card/card.component';
-import { Departamento, Ciudad, Especialista, CardStats } from '../../models/interfaces';
+import { Departamento, Ciudad, Especialista, Institucion, CardStats } from '../../models/interfaces';
 
 @Component({
   selector: 'app-buscador',
@@ -13,9 +14,13 @@ import { Departamento, Ciudad, Especialista, CardStats } from '../../models/inte
   styleUrls: ['./buscador.component.css']
 })
 export class BuscadorComponent implements OnInit {
+  private service = inject(EspecialistasService);
+  private cdr = inject(ChangeDetectorRef);
+
   departamentos: Departamento[] = [];
   cities: Ciudad[] = [];
   specialists: Especialista[] = [];
+  instituciones: Institucion[] = [];
 
   filteredDepartamentos: string[] = [];
   filteredCities: string[] = [];
@@ -38,9 +43,8 @@ export class BuscadorComponent implements OnInit {
   groupedCards: { stats: CardStats; list: Especialista[] }[] = [];
   detailStats: CardStats | null = null;
   detailList: Especialista[] = [];
+  detailInstituciones: Institucion[] = [];
   viewMode: 'grid' | 'detail' | null = null;
-
-  constructor(private service: EspecialistasService, private zone: NgZone) {}
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent) {
@@ -53,10 +57,11 @@ export class BuscadorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.service.loadAll().subscribe(([deps, cities, specs]) => {
+    this.service.loadAll().subscribe(([deps, cities, specs, insts]) => {
       this.departamentos = deps;
       this.cities = cities;
       this.specialists = specs;
+      this.instituciones = insts;
       this.filteredSpecialties = [...new Set(specs.map(s => s.especialidad))];
     });
   }
@@ -70,8 +75,10 @@ export class BuscadorComponent implements OnInit {
   }
 
   onDeptFocus() {
-    this.filteredDepartamentos = this.departamentos.map(d => d.nombre);
-    this.showDeptList = true;
+    setTimeout(() => {
+      this.filteredDepartamentos = this.departamentos.map(d => d.nombre);
+      this.showDeptList = true;
+    }, 0);
   }
 
   selectDept(nombre: string, event: MouseEvent) {
@@ -98,11 +105,13 @@ export class BuscadorComponent implements OnInit {
   }
 
   onCityFocus() {
-    const base = this.cities
-      .filter(c => Number(c.departamento_id) === Number(this.selectedDepartamento?.id))
-      .map(c => c.nombre);
-    this.filteredCities = base;
-    this.showCityList = true;
+    setTimeout(() => {
+      const base = this.cities
+        .filter(c => Number(c.departamento_id) === Number(this.selectedDepartamento?.id))
+        .map(c => c.nombre);
+      this.filteredCities = base;
+      this.showCityList = true;
+    }, 0);
   }
 
   selectCity(nombre: string, event: MouseEvent) {
@@ -120,8 +129,10 @@ export class BuscadorComponent implements OnInit {
   }
 
   onSpecFocus() {
-    this.filteredSpecialties = [...new Set(this.specialists.map(s => s.especialidad))];
-    this.showSpecList = true;
+    setTimeout(() => {
+      this.filteredSpecialties = [...new Set(this.specialists.map(s => s.especialidad))];
+      this.showSpecList = true;
+    }, 0);
   }
 
   selectSpec(nombre: string, event: MouseEvent) {
@@ -131,67 +142,74 @@ export class BuscadorComponent implements OnInit {
   }
 
   search() {
-  if (!this.selectedDepartamento || !this.selectedCity) {
-    alert('Debes seleccionar departamento y ciudad');
-    return;
-  }
+    if (!this.selectedDepartamento || !this.selectedCity) {
+      alert('Debes seleccionar departamento y ciudad');
+      return;
+    }
 
-  this.loading = true;
-  this.viewMode = null;
+    this.loading = true;
+    this.viewMode = null;
+    this.cdr.detectChanges();
 
-  setTimeout(() => {
-    this.zone.run(() => {
+    setTimeout(() => {
       const data = this.specialists.filter(
         e => Number(e.ciudad_id) === Number(this.selectedCity!.id)
       );
 
       if (this.specialtyInput) {
         const filtered = data.filter(e => e.especialidad === this.specialtyInput);
-
         if (filtered.length === 0) {
           this.loading = false;
-          this.viewMode = null;
+          this.cdr.detectChanges();
           alert('No hay especialistas para esta especialidad en la ciudad seleccionada');
           return;
         }
-
         this.detailStats = this.buildStats(filtered, this.specialtyInput);
         this.detailList = filtered;
+        this.detailInstituciones = this.getInstitucionesForList(filtered);
         this.viewMode = 'detail';
       } else {
         if (data.length === 0) {
           this.loading = false;
-          this.viewMode = null;
+          this.cdr.detectChanges();
           alert('No hay datos para esta ciudad');
           return;
         }
-
         const grouped: Record<string, Especialista[]> = {};
         data.forEach(e => {
           if (!grouped[e.especialidad]) grouped[e.especialidad] = [];
           grouped[e.especialidad].push(e);
         });
-
         this.groupedCards = Object.keys(grouped).map(spec => ({
           stats: this.buildStats(grouped[spec], spec),
           list: grouped[spec]
         }));
-
-          this.viewMode = 'grid';
-        }
-
-        this.loading = false;
-      });
+        this.viewMode = 'grid';
+      }
+    
+      this.loading = false;
+      this.cdr.detectChanges();
     }, 400);
   }
 
   selectCard(item: { stats: CardStats; list: Especialista[] }) {
     this.detailStats = item.stats;
     this.detailList = item.list;
+    this.detailInstituciones = this.getInstitucionesForList(item.list);
     this.viewMode = 'detail';
   }
 
+  getInstitucionesForList(list: Especialista[]): Institucion[] {
+    const ids = new Set(list.map(e => e.institucion_id));
+    return this.instituciones.filter(i => ids.has(i.id));
+  }
+
   buildStats(list: Especialista[], titulo: string): CardStats {
+    const instIds = new Set(list.map(e => e.institucion_id));
+    const instsEnEspecialidad = this.instituciones.filter(i => instIds.has(i.id));
+    const ips = instsEnEspecialidad.filter(i => i.tipo === 'IPS').length;
+    const profesionales = instsEnEspecialidad.filter(i => i.tipo === 'Profesional Médico').length;
+
     return {
       titulo,
       total: list.length,
@@ -199,9 +217,9 @@ export class BuscadorComponent implements OnInit {
       men: list.filter(e => e.genero === 'Hombre').length,
       active: list.filter(e => e.estado === 'Activo').length,
       inactive: list.filter(e => e.estado === 'Inactivo').length,
-      eps: list.filter(e => e.tipoAfiliacion === 'EPS').length,
-      ips: list.filter(e => e.tipoAfiliacion === 'IPS').length,
-      consultorio: list.filter(e => e.tipoAfiliacion === 'Consultorio').length
+      instituciones: ips + profesionales,
+      ips,
+      profesionales
     };
   }
 }

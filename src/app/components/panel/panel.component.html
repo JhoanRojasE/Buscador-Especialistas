@@ -1,0 +1,48 @@
+<div class="panel-layout">
+
+  <aside class="sidebar" [class.open]="menuOpen">
+    <div class="sidebar-logo">
+      <!-- <span class="material-icons logo-icon">favorite</span>
+      <span class="logo-text">Sistole</span> -->
+      <img src="https://sistole.co/img/logo/Sistole.png" alt="Sistole Logo" class="logo-image">
+    </div>
+
+    <nav class="sidebar-nav">
+      <button
+        *ngFor="let item of navItems"
+        class="nav-item"
+        [class.active]="activeRoute.includes(item.path)"
+        (click)="navigate(item.path)">
+        <span class="material-icons">{{ item.icon }}</span>
+        <span>{{ item.label }}</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <span class="material-icons">account_circle</span>
+        <span class="user-email">{{ userEmail }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">
+        <span class="material-icons">logout</span>
+        Cerrar sesión
+      </button>
+    </div>
+  </aside>
+
+  <div class="panel-body">
+    <header class="topbar">
+      <button class="menu-toggle" (click)="menuOpen = !menuOpen">
+        <span class="material-icons">{{ menuOpen ? 'close' : 'menu' }}</span>
+      </button>
+      <span class="topbar-title">
+        {{ navItems | titleByPath: activeRoute }}
+      </span>
+    </header>
+
+    <main class="panel-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+
+</div>

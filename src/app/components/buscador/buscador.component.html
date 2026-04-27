@@ -44,23 +44,12 @@
     </div>
 
     <ng-container *ngIf="viewMode === 'detail'">
-      <app-card [stats]="detailStats!" [single]="true"></app-card>
-
-      <h3 class="section-title">
-        <span class="material-icons">groups</span> Especialistas
-      </h3>
-
-      <div class="specialist-grid">
-        <div class="specialist-card" *ngFor="let s of detailList">
-          <h4>{{ s.titulo }} {{ s.nombre }}</h4>
-          <p>Edad: {{ s.edad }}</p>
-          <p>Experiencia: {{ s.experiencia }} años</p>
-          <p>Graduación: {{ s.graduacion }}</p>
-          <p>Tipo: {{ s.tipoAfiliacion }}</p>
-          <p>Afiliación: {{ s.afiliacion }}</p>
-          <p>Estado: {{ s.estado }}</p>
-        </div>
-      </div>
+      <app-card
+        [stats]="detailStats!"
+        [single]="true"
+        [instituciones]="detailInstituciones"
+        [especialistas]="detailList">
+      </app-card>
     </ng-container>
   </div>
 </div>

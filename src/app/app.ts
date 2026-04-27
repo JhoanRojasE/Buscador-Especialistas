@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { BuscadorComponent } from './components/buscador/buscador.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [BuscadorComponent],
-  template: `<app-buscador></app-buscador>`
+  imports: [RouterModule],
+  template: `<router-outlet></router-outlet>`
 })
 export class App {}

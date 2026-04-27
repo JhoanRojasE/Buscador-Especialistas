@@ -27,16 +27,65 @@
       <span class="stat-value">{{ stats.inactive }}</span>
     </p>
     <p>
-      <span class="stat-label"><span class="material-icons">health_and_safety</span> EPS</span>
-      <span class="stat-value">{{ stats.eps }}</span>
-    </p>
-    <p>
       <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
       <span class="stat-value">{{ stats.ips }}</span>
     </p>
     <p>
-      <span class="stat-label"><span class="material-icons">business</span> Consultorio</span>
-      <span class="stat-value">{{ stats.consultorio }}</span>
+      <span class="stat-label"><span class="material-icons">person</span> Prof. Médicos</span>
+      <span class="stat-value">{{ stats.profesionales }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">business</span> Instituciones</span>
+      <span class="stat-value">{{ stats.instituciones }}</span>
     </p>
   </div>
+
+  <ng-container *ngIf="single">
+
+    <div class="collapse-section" (click)="toggleInstituciones($event)">
+      <div class="collapse-header">
+        <span class="material-icons">business</span>
+        <span>Instituciones ({{ instituciones.length }})</span>
+        <span class="material-icons arrow" [class.open]="showInstituciones">expand_more</span>
+      </div>
+    </div>
+
+    <div class="collapse-body" [class.visible]="showInstituciones">
+      <div class="institucion-card" *ngFor="let inst of instituciones">
+        <div class="institucion-header">
+          <span class="inst-tipo" [class.ips]="inst.tipo === 'IPS'" [class.prof]="inst.tipo === 'Profesional Médico'">
+            {{ inst.tipo }}
+          </span>
+          <h4>{{ inst.nombre }}</h4>
+        </div>
+        <div class="institucion-body">
+          <p><span class="material-icons">location_on</span> {{ inst.direccion }}</p>
+          <p><span class="material-icons">phone</span> {{ inst.celular_contacto }}</p>
+          <p><span class="material-icons">email</span> {{ inst.correo }}</p>
+          <p><span class="material-icons">star</span> {{ inst.calificacion_promedio }} / 5.0</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="collapse-section" (click)="toggleEspecialistas($event)">
+      <div class="collapse-header">
+        <span class="material-icons">groups</span>
+        <span>Especialistas ({{ especialistas.length }})</span>
+        <span class="material-icons arrow" [class.open]="showEspecialistas">expand_more</span>
+      </div>
+    </div>
+
+    <div class="collapse-body" [class.visible]="showEspecialistas">
+      <div class="specialist-card" *ngFor="let s of especialistas">
+        <h4>{{ s.titulo }} {{ s.nombre }}</h4>
+        <p>Institución: {{s.institucion_id}}</p>
+        <p>Edad: {{ s.edad }}</p>
+        <p>Experiencia: {{ s.experiencia_anos }} años</p>
+        <p>Graduación: {{ s.fecha_graduacion | date:'yyyy' }}</p>
+        <p>Estado: {{ s.estado }}</p>
+        <p>Calificación: {{ s.calificacion_promedio }} / 5.0</p>
+      </div>
+    </div>
+
+  </ng-container>
 </div>

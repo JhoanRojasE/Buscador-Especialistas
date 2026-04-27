@@ -1,0 +1,92 @@
+<div class="list-container">
+  <div class="list-header">
+    <h2><span class="material-icons">people</span> Pacientes</h2>
+    <span class="count-badge">{{ filtered.length }} resultados</span>
+  </div>
+
+  <div class="filters-box">
+    <div class="search-field">
+      <span class="material-icons">search</span>
+      <input
+        type="text"
+        placeholder="Buscar por nombre o documento..."
+        [(ngModel)]="fBusqueda"
+        (input)="applyFilters()"
+      />
+    </div>
+
+    <select [(ngModel)]="fDept" (change)="onDeptChange()">
+      <option value="">Todos los departamentos</option>
+      <option *ngFor="let d of departamentos" [value]="d.nombre">{{ d.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fCity" (change)="applyFilters()">
+      <option value="">Todas las ciudades</option>
+      <option *ngFor="let c of cityOptions" [value]="c.nombre">{{ c.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fEstado" (change)="applyFilters()">
+      <option value="">Todos los estados</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+      <option value="Baja">Baja</option>
+    </select>
+
+    <button class="clear-btn" (click)="clearFilters()">
+      <span class="material-icons">filter_alt_off</span> Limpiar
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="filtered.length === 0">
+    <span class="material-icons">person_search</span>
+    <p>No hay pacientes con los filtros seleccionados</p>
+  </div>
+
+  <div class="table-wrapper" *ngIf="filtered.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre completo</th>
+          <th>Documento</th>
+          <th>Género</th>
+          <th>Edad</th>
+          <th>Ciudad</th>
+          <th>Celular</th>
+          <th class="center">Consultas</th>
+          <th class="center">Inasistencias</th>
+          <th>Última consulta</th>
+          <th>Estado</th>
+          <th>Roles</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filtered">
+          <td class="bold">{{ p.nombre }} {{ p.apellido }}</td>
+          <td class="text-muted">{{ p.tipo_documento }} {{ p.numero_documento }}</td>
+          <td>{{ p.genero }}</td>
+          <td class="center">{{ p.edad }}</td>
+          <td>{{ getCiudad(p.ciudad_id) }}</td>
+          <td>{{ p.celular }}</td>
+          <td class="center">
+            <span class="num-badge">{{ p.total_consultas }}</span>
+          </td>
+          <td class="center">
+            <span class="num-badge warn" *ngIf="p.inasistencias > 0">{{ p.inasistencias }}</span>
+            <span *ngIf="p.inasistencias === 0">0</span>
+          </td>
+          <td class="text-muted">{{ p.ultima_consulta | date:'dd/MM/yyyy' }}</td>
+          <td>
+            <span class="estado-badge" [class.activo]="p.estado === 'Activo'" [class.inactivo]="p.estado !== 'Activo'">
+              {{ p.estado }}
+            </span>
+          </td>
+          <td>
+            <span class="rol-badge" *ngFor="let r of p.roles">
+              {{ r }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="list-container">
+  <div class="list-header">
+    <h2><span class="material-icons">business</span> Instituciones</h2>
+    <span class="count-badge">{{ filtered.length }} resultados</span>
+  </div>
+
+  <div class="filters-box">
+    <select [(ngModel)]="fDept" (change)="onDeptChange()">
+      <option value="">Todos los departamentos</option>
+      <option *ngFor="let d of departamentos" [value]="d.nombre">{{ d.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fCity" (change)="applyFilters()">
+      <option value="">Todas las ciudades</option>
+      <option *ngFor="let c of cityOptions" [value]="c.nombre">{{ c.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fTipo" (change)="applyFilters()">
+      <option value="">Todos los tipos</option>
+      <option value="IPS">IPS</option>
+      <option value="Profesional Médico">Profesional Médico</option>
+    </select>
+
+    <select [(ngModel)]="fEstado" (change)="applyFilters()">
+      <option value="">Todos los estados</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+      <option value="Suspendido">Suspendido</option>
+    </select>
+
+    <select [(ngModel)]="fOrden" (change)="applyFilters()">
+      <option value="">Especialistas: sin orden</option>
+      <option value="desc">Especialistas: mayor a menor</option>
+      <option value="asc">Especialistas: menor a mayor</option>
+    </select>
+
+    <button class="clear-btn" (click)="clearFilters()">
+      <span class="material-icons">filter_alt_off</span> Limpiar
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="filtered.length === 0">
+    <span class="material-icons">search_off</span>
+    <p>No hay instituciones con los filtros seleccionados</p>
+  </div>
+
+  <div class="table-wrapper" *ngIf="filtered.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Ciudad</th>
+          <th>Departamento</th>
+          <th>NIT</th>
+          <th>Contacto</th>
+          <th class="center">Especialistas</th>
+          <th class="center">Calificación</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let i of filtered">
+          <td class="bold">{{ i.nombre }}</td>
+          <td>
+            <span class="inst-tipo" [class.ips]="i.tipo === 'IPS'" [class.prof]="i.tipo === 'Profesional Médico'">
+              {{ i.tipo }}
+            </span>
+          </td>
+          <td>{{ i.ciudadNombre }}</td>
+          <td class="text-muted">{{ i.departamentoNombre }}</td>
+          <td class="text-muted">{{ i.nit }}</td>
+          <td>{{ i.celular_contacto }}</td>
+          <td class="center">
+            <span class="num-badge">{{ i.totalEspecialistas }}</span>
+          </td>
+          <td class="center">
+            <span class="rating">
+              <span class="material-icons">star</span>
+              {{ i.calificacion_promedio }}
+            </span>
+          </td>
+          <td>
+            <span class="estado-badge" [class.activo]="i.estado === 'Activo'" [class.inactivo]="i.estado !== 'Activo'">
+              {{ i.estado }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

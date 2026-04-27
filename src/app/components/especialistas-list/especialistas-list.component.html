@@ -1,0 +1,81 @@
+<div class="list-container">
+  <div class="list-header">
+    <h2><span class="material-icons">medical_services</span> Especialistas</h2>
+    <span class="count-badge">{{ filtered.length }} resultados</span>
+  </div>
+
+  <div class="filters-box">
+    <select [(ngModel)]="fDept" (change)="onDeptChange()">
+      <option value="">Todos los departamentos</option>
+      <option *ngFor="let d of departamentos" [value]="d.nombre">{{ d.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fCity" (change)="applyFilters()">
+      <option value="">Todas las ciudades</option>
+      <option *ngFor="let c of cityOptions" [value]="c.nombre">{{ c.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fEspecialidad" (change)="applyFilters()">
+      <option value="">Todas las especialidades</option>
+      <option *ngFor="let e of especialidades" [value]="e">{{ e }}</option>
+    </select>
+
+    <select [(ngModel)]="fInstitucion" (change)="applyFilters()">
+      <option value="">Todas las instituciones</option>
+      <option *ngFor="let i of instituciones" [value]="i.nombre">{{ i.nombre }}</option>
+    </select>
+
+    <select [(ngModel)]="fEstado" (change)="applyFilters()">
+      <option value="">Todos los estados</option>
+      <option value="Activo">Activo</option>
+      <option value="Inactivo">Inactivo</option>
+    </select>
+
+    <button class="clear-btn" (click)="clearFilters()">
+      <span class="material-icons">filter_alt_off</span> Limpiar
+    </button>
+  </div>
+
+  <div class="empty-state" *ngIf="filtered.length === 0">
+    <span class="material-icons">search_off</span>
+    <p>No hay especialistas con los filtros seleccionados</p>
+  </div>
+
+  <div class="table-wrapper" *ngIf="filtered.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Título</th>
+          <th>Especialidad</th>
+          <th>Institución</th>
+          <th>Ciudad</th>
+          <th>Exp.</th>
+          <th>Calificación</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let e of filtered">
+          <td>{{ e.nombre }}</td>
+          <td class="text-muted">{{ e.titulo }}</td>
+          <td><span class="tag">{{ e.especialidad }}</span></td>
+          <td>{{ getInstitucion(e.institucion_id) }}</td>
+          <td>{{ getCiudad(e.ciudad_id) }}</td>
+          <td class="center">{{ e.experiencia_anos }} años</td>
+          <td class="center">
+            <span class="rating">
+              <span class="material-icons">star</span>
+              {{ e.calificacion_promedio }}
+            </span>
+          </td>
+          <td>
+            <span class="estado-badge" [class.activo]="e.estado === 'Activo'" [class.inactivo]="e.estado !== 'Activo'">
+              {{ e.estado }}
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

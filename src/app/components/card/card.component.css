@@ -7,11 +7,15 @@
   transition: transform 0.3s;
   animation: fadeUp 0.4s ease;
   min-width: 0;
-  margin-top: 20px;;
+  margin-top: 20px;
 }
 
 .card:hover {
   transform: translateY(-5px) scale(1.02);
+}
+
+.card.single:hover {
+  transform: none;
 }
 
 .card h3 {
@@ -26,7 +30,7 @@
 }
 
 .card.single {
-  max-width: 420px;
+  max-width: 520px;
   margin: 30px auto;
 }
 
@@ -94,6 +98,133 @@
 .material-icons {
   color: #c93d28;
   font-size: 16px;
+}
+
+.collapse-section {
+  margin-top: 14px;
+  border-radius: 10px;
+  background: #fff3f0;
+  cursor: pointer;
+  transition: background 0.2s;
+  user-select: none;
+}
+
+.collapse-section:hover {
+  background: #ffe5e0;
+}
+
+.collapse-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #e04830;
+}
+
+.collapse-header .arrow {
+  margin-left: auto;
+  transition: transform 0.3s;
+  font-size: 20px;
+}
+
+.collapse-header .arrow.open {
+  transform: rotate(180deg);
+}
+
+.collapse-body {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 4px;
+  margin-top: 10px;
+}
+
+.collapse-body.visible {
+  display: flex;
+}
+
+.institucion-card {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-left: 3px solid #e04830;
+}
+
+.institucion-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.institucion-header h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #222;
+  font-weight: 500;
+}
+
+.inst-tipo {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.inst-tipo.ips {
+  background: #e8f4fd;
+  color: #1a73c9;
+}
+
+.inst-tipo.prof {
+  background: #edf7ed;
+  color: #2e7d32;
+}
+
+.institucion-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+}
+
+.institucion-body p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+}
+
+.institucion-body p .material-icons {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.specialist-card {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  font-size: 13px;
+  color: #555;
+}
+
+.specialist-card h4 {
+  margin: 0 0 6px 0;
+  color: #c93d28;
+  font-size: 14px;
+}
+
+.specialist-card p {
+  margin: 3px 0;
 }
 
 @keyframes fadeUp {

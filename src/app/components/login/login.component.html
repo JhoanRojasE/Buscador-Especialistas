@@ -1,0 +1,69 @@
+<div class="login-wrapper">
+  <div class="login-left">
+    <div class="login-left-content">
+      <img src="https://sistole.co/img/logo/Sistole.png" alt="Sistole" class="brand-logo-large" />
+      <h2>Plataforma de gestión de especialistas médicos</h2>
+      <ul class="feature-list">
+        <li><span class="material-icons">search</span> Búsqueda por ciudad y especialidad</li>
+        <li><span class="material-icons">medical_services</span> Gestión de especialistas</li>
+        <li><span class="material-icons">business</span> Directorio de instituciones</li>
+        <li><span class="material-icons">people</span> Registro de pacientes</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="login-right">
+    <div class="login-card">
+      <div class="login-logo">
+        <img
+          src="https://sistole.co/img/logo/Sistole.png"
+          alt="Sistole"
+          class="brand-logo"
+          onerror="this.style.display='none'; document.getElementById('fallback-icon').style.display='flex'"
+        />
+        <div id="fallback-icon" class="fallback-logo" style="display:none">
+          <span class="material-icons">favorite</span>
+          <span>Sistole</span>
+        </div>
+        <p class="brand-sub">Colombia Biomedical</p>
+      </div>
+
+      <p class="login-title">Iniciar sesión</p>
+
+      <div class="login-form">
+        <div class="field-group">
+          <span class="material-icons field-icon">email</span>
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            [(ngModel)]="email"
+            (keyup.enter)="login()"
+          />
+        </div>
+
+        <div class="field-group">
+          <span class="material-icons field-icon">lock</span>
+          <input
+            type="password"
+            placeholder="Contraseña"
+            [(ngModel)]="password"
+            (keyup.enter)="login()"
+          />
+        </div>
+
+        <p class="error-msg" *ngIf="error">
+          <span class="material-icons">error_outline</span>
+          {{ error }}
+        </p>
+
+        <button class="login-btn" (click)="login()" [disabled]="loading">
+          <span class="material-icons" *ngIf="!loading">login</span>
+          <span class="spinner-sm" *ngIf="loading"></span>
+          {{ loading ? 'Ingresando...' : 'Ingresar' }}
+        </button>
+      </div>
+
+      <p class="login-footer">© 2025 Colombia Biomedical · Sistole.co</p>
+    </div>
+  </div>
+</div>
