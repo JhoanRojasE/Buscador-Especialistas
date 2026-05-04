@@ -1,55 +1,87 @@
 <div class="container">
-  <h2>Buscar Especialistas</h2>
+  <h2>Buscar Información</h2>
 
   <div class="search-box">
+
+    <!-- Select Busqueda -->
+    <div class="input-group">
+      <span class="material-icons">tune</span>
+
+      <input type="text" placeholder="Tipo de búsqueda" [value]="getSearchTypeLabel(searchType)" readonly
+        (click)="toggleSearchTypeDropdown()" />
+
+      <div class="dropdown" *ngIf="showSearchTypeList">
+        <div *ngFor="let t of searchTypeOptions" (click)="selectSearchType(t, $event)">
+          {{ t.label }}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Departamento -->
     <div class="input-group">
       <span class="material-icons">location_on</span>
-      <input type="text" placeholder="Departamento" [(ngModel)]="departmentInput"
-        (input)="onDeptInput()" (focus)="onDeptFocus()" />
+      <input type="text" placeholder="Departamento" [(ngModel)]="departmentInput" (input)="onDeptInput()"
+        (focus)="onDeptFocus()" />
       <div class="dropdown" *ngIf="showDeptList && filteredDepartamentos.length">
-        <div *ngFor="let d of filteredDepartamentos" (click)="selectDept(d, $event)">{{ d }}</div>
+        <div *ngFor="let d of filteredDepartamentos" (click)="selectDept(d, $event)">
+          {{ d }}
+        </div>
       </div>
     </div>
 
+    <!-- Ciudad -->
     <div class="input-group" [class.disabled]="cityDisabled">
       <span class="material-icons">map</span>
-      <input type="text" placeholder="Ciudad" [(ngModel)]="cityInput"
-        [disabled]="cityDisabled" (input)="onCityInput()" (focus)="onCityFocus()" />
+      <input type="text" placeholder="Ciudad" [(ngModel)]="cityInput" [disabled]="cityDisabled" (input)="onCityInput()"
+        (focus)="onCityFocus()" />
       <div class="dropdown" *ngIf="showCityList && filteredCities.length">
-        <div *ngFor="let c of filteredCities" (click)="selectCity(c, $event)">{{ c }}</div>
+        <div *ngFor="let c of filteredCities" (click)="selectCity(c, $event)">
+          {{ c }}
+        </div>
       </div>
     </div>
 
-    <div class="input-group">
+    <!-- Especialidad -->
+    <div class="input-group" *ngIf="searchType === 'especialidades'">
       <span class="material-icons">medical_services</span>
-      <input type="text" placeholder="Especialidad" [(ngModel)]="specialtyInput"
-        (input)="onSpecInput()" (focus)="onSpecFocus()" />
+      <input type="text" placeholder="Especialidad" [(ngModel)]="specialtyInput" (input)="onSpecInput()"
+        (focus)="onSpecFocus()" />
       <div class="dropdown" *ngIf="showSpecList && filteredSpecialties.length">
-        <div *ngFor="let s of filteredSpecialties" (click)="selectSpec(s, $event)">{{ s }}</div>
+        <div *ngFor="let s of filteredSpecialties" (click)="selectSpec(s, $event)">
+          {{ s }}
+        </div>
       </div>
     </div>
 
+    <!-- Botón -->
     <button (click)="search()">
-      <span class="material-icons" style="color:white">search</span> Buscar
+      <span class="material-icons" style="color:white">search</span>
+      Buscar
     </button>
+
   </div>
 
+  <!-- Resultados de la Busqueda -->
   <div id="resultsContainer">
+
+    <!-- Spinner de carga -->
     <div class="spinner" *ngIf="loading"></div>
 
-    <div class="cards" *ngIf="viewMode === 'grid'">
+    <div class="cards" [class.instituciones]="searchType === 'instituciones'" *ngIf="viewMode === 'grid'">
       <div *ngFor="let item of groupedCards" (click)="selectCard(item)">
-        <app-card [stats]="item.stats" [clickable]="true"></app-card>
+        <app-card [stats]="item.stats" [clickable]="true" [especialistas]="item.list || []"
+          [pacientes]="item.list || []" [instituciones]="item.instituciones || []">
+        </app-card>
       </div>
     </div>
 
+    <!-- Detalles -->
     <ng-container *ngIf="viewMode === 'detail'">
-      <app-card
-        [stats]="detailStats!"
-        [single]="true"
-        [instituciones]="detailInstituciones"
-        [especialistas]="detailList">
+      <app-card [stats]="detailStats!" [single]="true" [instituciones]="detailInstituciones"
+        [especialistas]="detailList" [pacientes]="detailPacientes" [consultorios]="detailConsultorios">
       </app-card>
     </ng-container>
+
   </div>
 </div>

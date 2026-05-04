@@ -7,12 +7,8 @@
   <div class="filters-box">
     <div class="search-field">
       <span class="material-icons">search</span>
-      <input
-        type="text"
-        placeholder="Buscar por nombre o documento..."
-        [(ngModel)]="fBusqueda"
-        (input)="applyFilters()"
-      />
+      <input type="text" placeholder="Buscar por nombre o documento..." [(ngModel)]="fBusqueda"
+        (input)="applyFilters()" />
     </div>
 
     <select [(ngModel)]="fDept" (change)="onDeptChange()">
@@ -81,9 +77,11 @@
             </span>
           </td>
           <td>
-            <span class="rol-badge" *ngFor="let r of p.roles">
-              {{ r }}
-            </span>
+            <div class="roles-container">
+              <span class="rol-badge" *ngFor="let rol of p.roles">
+                {{ rol }}
+              </span>
+            </div>
           </td>
         </tr>
       </tbody>

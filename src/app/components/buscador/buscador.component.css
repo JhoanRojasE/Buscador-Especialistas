@@ -37,6 +37,18 @@ h2 {
   transform: translateY(-2px);
 }
 
+/* .input-group select {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  cursor: pointer;
+} */
+
+.input-group input[readonly] {
+  cursor: pointer;
+}
+
 .input-group {
   position: relative;
   flex: 1;
@@ -111,9 +123,13 @@ button:hover {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
 }
+/* Cuando son instituciones solo 2 cards */
+/* .cards.instituciones {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+} */
 
 .card {
   background: white;

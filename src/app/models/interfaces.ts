@@ -83,17 +83,50 @@ export interface Paciente {
   inasistencias: number;
   ultima_consulta: string;
   estado: string;
-  roles: string[];
+
+  roles: ('Paciente' | 'Acudiente' | 'Colaborador')[];
+}
+
+export interface Consultorio {
+  id: number;
+  nombre: string;
+  direccion: string;
+  departamento_id: number;
+  ciudad_id: number;
+  institucion_id: number;
+  especialidades: string[];
+  calificacion_promedio: number;
+  telefono?: string;
+  correo?: string;
 }
 
 export interface CardStats {
   titulo: string;
   total: number;
-  women: number;
-  men: number;
-  active: number;
-  inactive: number;
-  instituciones: number;
-  ips: number;
-  profesionales: number;
+
+  // comunes
+  women?: number;
+  men?: number;
+  active?: number;
+  inactive?: number;
+
+  // especialistas
+  instituciones?: number;
+  ips?: number;
+  profesionales?: number;
+
+  // pacientes
+  acudientes?: number;
+  colaboradores?: number;
+
+  // instituciones
+  tipoInstitucion?: string;
+  estado?: string;
+
+  // general
+  consultorios?: number;
+  pacientes?: number;
+
+  // 🔥 CONTROL DE UI
+  type: 'especialidades' | 'pacientes' | 'instituciones' | 'general';
 }

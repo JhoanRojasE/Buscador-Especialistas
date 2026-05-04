@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "nombre": "Consultorio Vida Cardiovascular",
+    "direccion": "Calle 10 #23-45",
+    "departamento_id": 1,
+    "ciudad_id": 1,
+    "institucion_id": 2,
+    "especialidades": ["Cardiología"],
+    "calificacion_promedio": 4.6,
+    "telefono": "3200000000",
+    "correo": "contacto@consultoriovida.com"
+  },
+  {
+    "id": 2,
+    "nombre": "Consultorio Salud Integral",
+    "direccion": "Avenida 5 #12-34",
+    "departamento_id": 1,
+    "ciudad_id": 1,
+    "institucion_id": 3,
+    "especialidades": ["Medicina General", "Pediatría"],
+    "calificacion_promedio": 4.2,
+    "telefono": "3100000000",
+    "correo": "contacto@consultoriosalud.com"
+  },
+  {
+    "id": 3,
+    "nombre": "Consultorio Ortopédico",
+    "direccion": "Calle 20 #45-67",
+    "departamento_id": 2,
+    "ciudad_id": 2,
+    "institucion_id": 4,
+    "especialidades": ["Ortopedia"],
+    "calificacion_promedio": 4.8,
+    "telefono": "3000000000",
+    "correo": "ortopedico@gmail.com"
+  },
+  {
+    "id": 4,
+    "nombre": "Consultorio Dental Sonrisas",
+    "direccion": "Avenida 15 #10-20",
+    "departamento_id": 2,
+    "ciudad_id": 2,
+    "institucion_id": 5,
+    "especialidades": ["Odontología"],
+    "calificacion_promedio": 4.5,
+    "telefono": "3050000000",
+    "correo": "dental@gmail.com"
+  },
+  {
+    "id": 5,
+    "nombre": "Consultorio Pediátrico Estrella",
+    "direccion": "Calle 30 #50-70",
+    "departamento_id": 3,
+    "ciudad_id": 3,
+    "institucion_id": 6,
+    "especialidades": ["Pediatría"],
+    "calificacion_promedio": 4.7,
+    "telefono": "3150000000",
+    "correo": "estrella@pediatria.com"
+  }
+]

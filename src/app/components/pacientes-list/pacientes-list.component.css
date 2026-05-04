@@ -281,6 +281,12 @@ tbody td.bold {
   color: #2e7d32;
 }
 
+.roles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 6px; /* separación horizontal y vertical */
+}
+
 .rol-badge {
   background: #e3f2fd;
   color: #1565c0;
