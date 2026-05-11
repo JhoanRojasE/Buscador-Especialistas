@@ -1,16 +1,13 @@
 <div class="card" [class.clickable]="clickable" [class.single]="single">
 
-  <!-- ========================= -->
   <!-- HEADER -->
-  <!-- ========================= -->
   <h3>
     <span class="material-icons">
-      {{
-      stats.type === 'pacientes' ? 'groups' :
-      stats.type === 'instituciones' ? 'business' :
-      stats.type === 'especialidades' ? 'medical_services' :
-      'analytics'
-      }}
+      {{ stats.type === 'pacientes'         ? 'groups'          :
+         stats.type === 'instituciones_esp' ? 'business'        :
+         stats.type === 'instituciones'     ? 'business'        :
+         stats.type === 'general'           ? 'analytics'       :
+         'medical_services' }}
     </span>
     {{ stats.titulo }}
   </h3>
@@ -21,280 +18,255 @@
     Total: {{ stats.total }}
   </p>
 
-  <!-- ========================= -->
-  <!-- PACIENTES -->
-  <!-- ========================= -->
-  <div class="stats-grid" *ngIf="stats.type === 'pacientes'">
-
+  <!-- ===================== ESPECIALIDADES ===================== -->
+  <div class="stats-grid" *ngIf="stats.type === 'especialidades'">
     <p>
-      <span class="stat-label">
-        <span class="material-icons">female</span> Mujeres
-      </span>
+      <span class="stat-label"><span class="material-icons">female</span> Mujeres</span>
       <span class="stat-value">{{ stats.women }}</span>
     </p>
-
     <p>
-      <span class="stat-label">
-        <span class="material-icons">male</span> Hombres
-      </span>
+      <span class="stat-label"><span class="material-icons">male</span> Hombres</span>
       <span class="stat-value">{{ stats.men }}</span>
     </p>
-
     <p>
-      <span class="stat-label">
-        <span class="material-icons">check_circle</span> Activos
-      </span>
+      <span class="stat-label"><span class="material-icons">check_circle</span> Activos</span>
       <span class="stat-value">{{ stats.active }}</span>
     </p>
-
     <p>
-      <span class="stat-label">
-        <span class="material-icons">cancel</span> Inactivos
-      </span>
+      <span class="stat-label"><span class="material-icons">cancel</span> Inactivos</span>
       <span class="stat-value">{{ stats.inactive }}</span>
     </p>
-
-  </div>
-
-  <!-- ========================= -->
-  <!-- INSTITUCIONES -->
-  <!-- ========================= -->
-  <div class="stats-grid" *ngIf="stats.type === 'instituciones'">
-
     <p>
-      <span class="stat-label">
-        <span class="material-icons">business</span> Tipo
-      </span>
-      <span class="stat-value">{{ stats.tipoInstitucion }}</span>
+      <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
+      <span class="stat-value">{{ stats.ips }}</span>
     </p>
-
     <p>
-      <span class="stat-label">
-        <span class="material-icons">info</span> Estado
-      </span>
-      <span class="stat-value">{{ stats.estado }}</span>
+      <span class="stat-label"><span class="material-icons">person</span> Consultorios</span>
+      <span class="stat-value">{{ stats.profesionales }}</span>
     </p>
-
     <p>
-      <span class="stat-label">
-        <span class="material-icons">person</span> Médicos
-      </span>
-      <span class="stat-value">{{ especialistas.length }}</span>
+      <span class="stat-label"><span class="material-icons">business</span> Instituciones</span>
+      <span class="stat-value">{{ stats.instituciones }}</span>
     </p>
-
-    <p *ngIf="instituciones[0]?.nit">
-      <span class="stat-label">
-        <span class="material-icons">badge</span> NIT
-      </span>
-      <span class="stat-value">{{ instituciones[0]?.nit }}</span>
-    </p>
-
-    <p *ngIf="instituciones[0]?.celular_contacto">
-      <span class="stat-label">
-        <span class="material-icons">phone</span> Celular
-      </span>
-      <span class="stat-value">{{ instituciones[0]?.celular_contacto }}</span>
-    </p>
-
-    <p *ngIf="instituciones[0]?.correo">
-      <span class="stat-label">
-        <span class="material-icons">email</span> Correo
-      </span>
-      <span class="stat-value">{{ instituciones[0]?.correo }}</span>
-    </p>
-
-    <p *ngIf="instituciones[0]?.direccion">
-      <span class="stat-label">
-        <span class="material-icons">location_on</span> Dirección
-      </span>
-      <span class="stat-value">{{ instituciones[0]?.direccion }}</span>
-    </p>
-
   </div>
 
-  <!-- ========================= -->
-  <!-- ESPECIALISTAS -->
-  <!-- ========================= -->
-  <div class="stats-grid" *ngIf="stats.type === 'especialidades'">
-
-    <p><span class="stat-label"><span class="material-icons">female</span>Mujeres</span><span class="stat-value">{{
-        stats.women }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">male</span>Hombres</span><span class="stat-value">{{
-        stats.men }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">check_circle</span>Activos</span><span
-        class="stat-value">{{ stats.active }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">cancel</span>Inactivos</span><span class="stat-value">{{
-        stats.inactive }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">local_hospital</span>IPS</span><span class="stat-value">{{
-        stats.ips }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">person</span>Consultorios</span><span
-        class="stat-value">{{ stats.profesionales }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">business</span>Instituciones</span><span
-        class="stat-value">{{ stats.instituciones }}</span></p>
+  <!-- ===================== INSTITUCIONES POR ESPECIALIDAD ===================== -->
+  <div class="stats-grid" *ngIf="stats.type === 'instituciones_esp'">
+    <p>
+      <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
+      <span class="stat-value">{{ stats.ips }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">person</span> Consultorios</span>
+      <span class="stat-value">{{ stats.profesionales }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">business</span> Total Instituciones</span>
+      <span class="stat-value">{{ stats.instituciones }}</span>
+    </p>
   </div>
 
-  <!-- ========================= -->
-  <!-- GENERAL -->
-  <!-- ========================= -->
-  <div class="stats-grid" *ngIf="stats.type === 'general'">
+  <!-- ===================== PACIENTES ===================== -->
+  <ng-container *ngIf="stats.type === 'pacientes'">
 
-    <p><span class="stat-label"><span class="material-icons">groups</span>Pacientes</span><span class="stat-value">{{
-        stats.pacientes }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">apartment</span>Consultorios</span><span
-        class="stat-value">{{ stats.consultorios }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">local_hospital</span>IPS</span><span class="stat-value">{{
-        stats.ips }}</span></p>
-    <p><span class="stat-label"><span class="material-icons">person</span>Profesionales</span><span
-        class="stat-value">{{ stats.profesionales }}</span></p>
-
-  </div>
-
-  <!-- CONSULTORIOS -->
-  <ng-container *ngIf="single && stats.type === 'general'">
-
-    <div class="collapse-header" (click)="toggleConsultorios($event)">
-      <span class="material-icons">apartment</span>
-      Consultorios ({{ consultorios.length }})
-      <span class="material-icons arrow" [class.open]="showConsultorios">expand_more</span>
+    <!-- Resumen género -->
+    <div class="stats-grid">
+      <p>
+        <span class="stat-label"><span class="material-icons">female</span> Mujeres</span>
+        <span class="stat-value">{{ stats.women }}</span>
+      </p>
+      <p>
+        <span class="stat-label"><span class="material-icons">male</span> Hombres</span>
+        <span class="stat-value">{{ stats.men }}</span>
+      </p>
+      <p>
+        <span class="stat-label"><span class="material-icons">check_circle</span> Activos</span>
+        <span class="stat-value">{{ stats.active }}</span>
+      </p>
+      <p>
+        <span class="stat-label"><span class="material-icons">cancel</span> Inactivos</span>
+        <span class="stat-value">{{ stats.inactive }}</span>
+      </p>
     </div>
 
-    <div *ngIf="showConsultorios">
-      <div *ngFor="let c of consultorios" class="specialist-card">
-
-        <h4>
-          <span class="material-icons">apartment</span>
-          {{ c.nombre }}
-        </h4>
-
-        <p>
-          <span class="material-icons">location_on</span>
-          {{ c.direccion }}
-        </p>
-
-        <p>
-          <span class="material-icons">business</span>
-          {{ c.institucion }}
-        </p>
-
-        <p>
-          <span class="material-icons">phone</span>
-          {{ c.telefono }}
-        </p>
-
-        <p>
-          <span class="material-icons">email</span>
-          {{ c.correo }}
-        </p>
-
-      </div>
+    <!-- Tabla rangos de edad -->
+    <div class="age-table-wrapper">
+      <table class="age-table">
+        <thead>
+          <tr>
+            <th>Etapa</th>
+            <th>Rango</th>
+            <th><span class="material-icons age-icon female-icon">female</span></th>
+            <th><span class="material-icons age-icon male-icon">male</span></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let g of ageGroups">
+            <td>{{ g.label }}</td>
+            <td class="range-cell">{{ g.range }}</td>
+            <td class="female-cell">{{ getAgeGroupWomen(g.key) }}</td>
+            <td class="male-cell">{{ getAgeGroupMen(g.key) }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
   </ng-container>
 
-  <!-- ========================= -->
+  <!-- ===================== GENERAL ===================== -->
+  <div class="stats-grid" *ngIf="stats.type === 'general'">
+    <p>
+      <span class="stat-label"><span class="material-icons">groups</span> Pacientes</span>
+      <span class="stat-value">{{ stats.total }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
+      <span class="stat-value">{{ stats.ips }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">person</span> Consultorios</span>
+      <span class="stat-value">{{ stats.profesionales }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">business</span> Instituciones</span>
+      <span class="stat-value">{{ stats.instituciones }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">medical_services</span> Médicos</span>
+      <span class="stat-value">{{ $any(stats).medicos }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">science</span> Especialidades</span>
+      <span class="stat-value">{{ $any(stats).especialidadesCount }}</span>
+    </p>
+  </div>
+
   <!-- LISTAS -->
-  <!-- ========================= -->
   <ng-container *ngIf="single">
 
+    <!-- INSTITUCIONES (para tipo instituciones_esp) -->
+    <ng-container *ngIf="stats.type === 'instituciones_esp' || stats.type === 'especialidades'">
+      <div class="collapse-section" (click)="toggleInstituciones($event)">
+        <div class="collapse-header">
+          <span class="material-icons">business</span>
+          <span>Instituciones ({{ instituciones.length }})</span>
+          <span class="material-icons arrow" [class.open]="showInstituciones">expand_more</span>
+        </div>
+      </div>
+      <div class="collapse-body" [class.visible]="showInstituciones">
+        <div *ngFor="let i of instituciones" class="institucion-card">
+          <div class="institucion-header">
+            <span class="inst-tipo" [class.ips]="i.tipo === 'IPS'" [class.prof]="i.tipo === 'Profesional Médico'">
+              {{ i.tipo }}
+            </span>
+            <h4>{{ i.nombre }}</h4>
+          </div>
+          <div class="institucion-body">
+            <p><span class="material-icons">location_on</span> {{ i.direccion }}</p>
+            <p><span class="material-icons">phone</span> {{ i.celular_contacto }}</p>
+            <p><span class="material-icons">email</span> {{ i.correo }}</p>
+            <p><span class="material-icons">star</span> {{ i.calificacion_promedio }} / 5.0</p>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- ESPECIALISTAS (para tipo especialidades) -->
+    <ng-container *ngIf="stats.type === 'especialidades'">
+      <div class="collapse-section" (click)="toggleEspecialistas($event)">
+        <div class="collapse-header">
+          <span class="material-icons">groups</span>
+          <span>Especialistas ({{ especialistas.length }})</span>
+          <span class="material-icons arrow" [class.open]="showEspecialistas">expand_more</span>
+        </div>
+      </div>
+      <div class="collapse-body" [class.visible]="showEspecialistas">
+        <div *ngFor="let s of especialistas" class="specialist-card">
+          <h4>{{ s.titulo }} {{ s.nombre }}</h4>
+          <p>Edad: {{ s.edad }}</p>
+          <p>Experiencia: {{ s.experiencia_anos }} años</p>
+          <p>Graduación: {{ s.fecha_graduacion | date:'yyyy' }}</p>
+          <p>Estado: {{ s.estado }}</p>
+          <p>Calificación: {{ s.calificacion_promedio }} / 5.0</p>
+        </div>
+      </div>
+    </ng-container>
+
     <!-- PACIENTES -->
-    <div *ngIf="stats.type === 'pacientes'">
-
-      <div class="collapse-header" (click)="togglePacientes($event)">
-        <span class="material-icons">groups</span>
-        Pacientes ({{ pacientes.length }})
-        <span class="material-icons arrow" [class.open]="showPacientes">expand_more</span>
+    <ng-container *ngIf="stats.type === 'pacientes'">
+      <div class="collapse-section" (click)="togglePacientes($event)">
+        <div class="collapse-header">
+          <span class="material-icons">groups</span>
+          <span>Pacientes ({{ pacientes.length }})</span>
+          <span class="material-icons arrow" [class.open]="showPacientes">expand_more</span>
+        </div>
       </div>
-
-      <div *ngIf="showPacientes">
+      <div class="collapse-body" [class.visible]="showPacientes">
         <div *ngFor="let p of pacientes" class="specialist-card">
+          <h4>{{ p.nombre }} {{ p.apellido }}</h4>
+          <p>Doc: {{ p.tipo_documento }} {{ p.numero_documento }}</p>
+          <p>Edad: {{ p.edad }} — {{ p.genero }}</p>
+          <p>Celular: {{ p.celular }}</p>
+          <p>Estado: {{ p.estado }}</p>
+        </div>
+      </div>
+    </ng-container>
 
-          <h4>
-            <span class="material-icons">person</span>
-            {{ p.nombre }} {{ p.apellido }}
-          </h4>
-
-          <p>
-            <span class="material-icons">badge</span>
-            {{ p.numero_documento }}
-          </p>
-
-          <p>
-            <span class="material-icons">phone</span>
-            {{ p.celular }}
-          </p>
-
-          <p>
-            <span class="material-icons">info</span>
-            {{ p.estado }}
-          </p>
-
+    <!-- GENERAL: instituciones + médicos -->
+    <ng-container *ngIf="stats.type === 'general'">
+      <div class="collapse-section" (click)="toggleInstituciones($event)">
+        <div class="collapse-header">
+          <span class="material-icons">business</span>
+          <span>Instituciones ({{ instituciones.length }})</span>
+          <span class="material-icons arrow" [class.open]="showInstituciones">expand_more</span>
+        </div>
+      </div>
+      <div class="collapse-body" [class.visible]="showInstituciones">
+        <div *ngFor="let i of instituciones" class="institucion-card">
+          <div class="institucion-header">
+            <span class="inst-tipo" [class.ips]="i.tipo === 'IPS'" [class.prof]="i.tipo === 'Profesional Médico'">
+              {{ i.tipo }}
+            </span>
+            <h4>{{ i.nombre }}</h4>
+          </div>
+          <div class="institucion-body">
+            <p><span class="material-icons">location_on</span> {{ i.direccion }}</p>
+            <p><span class="material-icons">phone</span> {{ i.celular_contacto }}</p>
+            <p><span class="material-icons">star</span> {{ i.calificacion_promedio }} / 5.0</p>
+          </div>
         </div>
       </div>
 
-    </div>
-
-    <!-- ESPECIALIDADES -->
-    <div *ngIf="stats.type === 'especialidades'">
-
-      <!-- INSTITUCIONES -->
-      <div class="collapse-header" (click)="toggleInstituciones($event)">
-        <span class="material-icons">business</span>
-        Instituciones ({{ instituciones.length }})
-        <span class="material-icons arrow" [class.open]="showInstituciones">expand_more</span>
-      </div>
-
-      <div *ngIf="showInstituciones">
-        <div *ngFor="let i of instituciones" class="specialist-card">
-          <h4>{{ i.nombre }}</h4>
-          <p><span class="material-icons">business</span> {{ i.tipo }}</p>
-          <p><span class="material-icons">location_on</span> {{ i.direccion }}</p>
-          <p><span class="material-icons">info</span> {{ i.estado }}</p>
-          <p><span class="material-icons">phone</span> {{ i.celular_contacto }}</p>
-          <p><span class="material-icons">location_city</span> {{ i.ciudad_id }}</p>
+      <div class="collapse-section" (click)="toggleEspecialistas($event)">
+        <div class="collapse-header">
+          <span class="material-icons">medical_services</span>
+          <span>Especialistas ({{ especialistas.length }})</span>
+          <span class="material-icons arrow" [class.open]="showEspecialistas">expand_more</span>
         </div>
       </div>
-
-      <!-- MEDICOS -->
-      <div class="collapse-header" (click)="toggleEspecialistas($event)">
-        <span class="material-icons">person</span>
-        Especialistas ({{ especialistas.length }})
-        <span class="material-icons arrow" [class.open]="showEspecialistas">expand_more</span>
-      </div>
-
-      <div *ngIf="showEspecialistas">
+      <div class="collapse-body" [class.visible]="showEspecialistas">
         <div *ngFor="let s of especialistas" class="specialist-card">
           <h4>{{ s.titulo }} {{ s.nombre }}</h4>
-          <p><span class="material-icons">medical_services</span> {{ s.especialidad }}</p>
-          <p><span class="material-icons">work</span> {{ s.experiencia_anos }} años</p>
-          <p><span class="material-icons">email</span> {{ s.correo }}</p>
-          <p><span class="material-icons">phone</span> {{ s.celular }}</p>
-          <p><span class="material-icons">info</span> {{ s.estado }}</p>
+          <p>{{ s.especialidad }} — {{ s.experiencia_anos }} años</p>
+          <p>Estado: {{ s.estado }}</p>
         </div>
       </div>
 
-    </div>
-
-    <!-- INSTITUCIONES -->
-    <div *ngIf="stats.type === 'instituciones'">
-
-      <div class="collapse-header" (click)="toggleEspecialistas($event)">
-        <span class="material-icons">person</span>
-        Médicos ({{ especialistas.length }})
-        <span class="material-icons arrow" [class.open]="showEspecialistas">expand_more</span>
-      </div>
-
-      <div *ngIf="showEspecialistas">
-        <div *ngFor="let s of especialistas" class="specialist-card">
-          <h4>{{ s.titulo }} {{ s.nombre }}</h4>
-          <p><span class="material-icons">medical_services</span> {{ s.especialidad }}</p>
-          <p><span class="material-icons">work</span> {{ s.experiencia_anos }} años</p>
-          <p><span class="material-icons">email</span> {{ s.correo }}</p>
-          <p><span class="material-icons">phone</span> {{ s.celular }}</p>
-          <p><span class="material-icons">info</span> {{ s.estado }}</p>
+      <div class="collapse-section" (click)="togglePacientes($event)">
+        <div class="collapse-header">
+          <span class="material-icons">groups</span>
+          <span>Pacientes ({{ pacientes.length }})</span>
+          <span class="material-icons arrow" [class.open]="showPacientes">expand_more</span>
         </div>
       </div>
-
-    </div>
+      <div class="collapse-body" [class.visible]="showPacientes">
+        <div *ngFor="let p of pacientes" class="specialist-card">
+          <h4>{{ p.nombre }} {{ p.apellido }}</h4>
+          <p>{{ p.edad }} años — {{ p.genero }}</p>
+          <p>Estado: {{ p.estado }}</p>
+        </div>
+      </div>
+    </ng-container>
 
   </ng-container>
 </div>

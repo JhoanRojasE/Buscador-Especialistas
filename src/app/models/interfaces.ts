@@ -128,5 +128,5 @@ export interface CardStats {
   pacientes?: number;
 
   // 🔥 CONTROL DE UI
-  type: 'especialidades' | 'pacientes' | 'instituciones' | 'general';
+  type: 'especialidades' | 'pacientes' | 'instituciones' | 'instituciones_esp' | 'general';
 }

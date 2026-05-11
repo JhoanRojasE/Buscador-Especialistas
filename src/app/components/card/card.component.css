@@ -1,41 +1,17 @@
-/* ========================= */
-/* CARD BASE */
-/* ========================= */
 .card {
   background: white;
-  padding: 18px;
+  padding: 20px;
   border-radius: 14px;
   text-align: center;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-
   transition: transform 0.3s;
   animation: fadeUp 0.4s ease;
-
-  margin-top: 20px;
-
-  /* 🔥 FIX CLAVE */
   min-width: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
 }
 
-.card:hover {
-  transform: translateY(-5px) scale(1.02);
-}
+.card:hover { transform: translateY(-5px) scale(1.02); }
+.card.single:hover { transform: none; }
 
-.card.single:hover {
-  transform: none;
-}
-
-.card.single {
-  max-width: 520px;
-  margin: 30px auto;
-}
-
-/* ========================= */
-/* HEADER */
-/* ========================= */
 .card h3 {
   display: flex;
   align-items: center;
@@ -45,183 +21,224 @@
   font-weight: 500;
   margin-bottom: 10px;
   color: #333;
-  text-align: center;
 }
 
-/* ========================= */
-/* CLICKABLE */
-/* ========================= */
-.card.clickable {
-  cursor: pointer;
-  border: 2px solid transparent;
-}
+.card.single { max-width: 560px; margin: 30px auto; }
+.card.clickable { cursor: pointer; border: 2px solid transparent; }
+.card.clickable:hover { border-color: #e04830; }
 
-.card.clickable:hover {
-  border-color: #e04830;
-}
-
-/* ========================= */
-/* TOTAL */
-/* ========================= */
 .card .total {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: bold;
   color: #e04830;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
-/* ========================= */
-/* GRID (🔥 FIX PRINCIPAL) */
-/* ========================= */
 .stats-grid {
   display: grid;
-
-  /* 🔥 CLAVE PARA QUE NO SE ROMPA */
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-
+  grid-template-columns: repeat(2, 1fr);
   gap: 8px;
   width: 100%;
 }
 
-/* 🔥 EVITA QUE EXPLOTE */
 .stats-grid p {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   margin: 0;
-  padding: 10px 6px;
-
+  padding: 10px 8px;
   background: #f9f9f9;
   border-radius: 8px;
-
   min-width: 0;
-  overflow: hidden;
-  text-align: center;
 }
 
-/* 🔥 TEXTO CONTROLADO */
+.stats-grid p:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
 .stat-label {
-  font-size: 10px;
+  font-size: 11px;
   color: #888;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
-
+  letter-spacing: 0.4px;
+  white-space: nowrap;
   display: flex;
   align-items: center;
   gap: 4px;
-
-  white-space: nowrap;
 }
 
 .stat-value {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   color: #333;
   margin-top: 2px;
-
-  /* 🔥 CLAVE PARA TEXTOS LARGOS */
-  word-break: break-word;
 }
 
-/* ========================= */
-/* ICONOS */
-/* ========================= */
-.material-icons {
-  color: #c93d28;
-  font-size: 16px;
+.material-icons { color: #c93d28; font-size: 16px; }
+
+/* ========================= TABLA RANGOS EDAD ========================= */
+.age-table-wrapper {
+  margin-top: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
 }
 
-.stat-label .material-icons {
+.age-table {
+  width: 100%;
+  border-collapse: collapse;
   font-size: 13px;
 }
 
-/* ========================= */
-/* COLLAPSE */
-/* ========================= */
-.collapse-header {
+.age-table thead tr {
+  background: #fff3f0;
+  border-bottom: 2px solid #f0d0ca;
+}
+
+.age-table th {
+  padding: 8px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  text-align: center;
+}
+
+.age-table th:first-child { text-align: left; }
+
+.age-table tbody tr {
+  border-bottom: 1px solid #f9f9f9;
+  transition: background 0.15s;
+}
+
+.age-table tbody tr:last-child { border-bottom: none; }
+.age-table tbody tr:hover { background: #fffaf9; }
+
+.age-table td {
+  padding: 8px 10px;
+  text-align: center;
+  color: #444;
+}
+
+.age-table td:first-child {
+  text-align: left;
+  font-weight: 500;
+  color: #333;
+}
+
+.range-cell { color: #aaa; font-size: 12px; }
+.female-cell { color: #d4567a; font-weight: 500; }
+.male-cell   { color: #3a7bd5; font-weight: 500; }
+
+.age-icon { font-size: 16px !important; vertical-align: middle; }
+.female-icon { color: #d4567a !important; }
+.male-icon   { color: #3a7bd5 !important; }
+
+/* ========================= COLLAPSE ========================= */
+.collapse-section {
   margin-top: 14px;
   border-radius: 10px;
   background: #fff3f0;
   cursor: pointer;
   transition: background 0.2s;
   user-select: none;
+}
 
+.collapse-section:hover { background: #ffe5e0; }
+
+.collapse-header {
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 10px 14px;
-
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: #e04830;
 }
 
-.collapse-header:hover {
-  background: #ffe5e0;
-}
-
-/* 🔥 FLECHA */
 .collapse-header .arrow {
   margin-left: auto;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s;
   font-size: 20px;
 }
 
-.collapse-header .arrow.open {
-  transform: rotate(180deg);
+.collapse-header .arrow.open { transform: rotate(180deg); }
+
+.collapse-body {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 4px;
+  margin-top: 10px;
 }
 
-/* ========================= */
-/* LISTAS */
-/* ========================= */
+.collapse-body.visible { display: flex; }
+
+.institucion-card {
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 12px 14px;
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-left: 3px solid #e04830;
+}
+
+.institucion-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.institucion-header h4 { margin: 0; font-size: 14px; color: #222; font-weight: 500; }
+
+.inst-tipo {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.inst-tipo.ips  { background: #e8f4fd; color: #1a73c9; }
+.inst-tipo.prof { background: #edf7ed; color: #2e7d32; }
+
+.institucion-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 10px;
+}
+
+.institucion-body p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin: 0;
+  font-size: 12px;
+  color: #555;
+}
+
+.institucion-body p .material-icons { font-size: 13px; color: #aaa; }
+
 .specialist-card {
   background: #fafafa;
   border-radius: 10px;
   padding: 12px 14px;
   text-align: left;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-
   font-size: 13px;
   color: #555;
-
-  margin-top: 8px;
-
-  /* 🔥 EVITA DESBORDE */
-  word-break: break-word;
 }
 
-.specialist-card h4 {
-  margin: 0 0 6px 0;
-  color: #c93d28;
-  font-size: 14px;
-}
+.specialist-card h4 { margin: 0 0 6px; color: #c93d28; font-size: 14px; }
+.specialist-card p  { margin: 3px 0; }
 
-.specialist-card p {
-  margin: 3px 0;
-
-  display: flex;
-  align-items: center;
-  gap: 5px;
-
-  font-size: 12px;
-}
-
-/* ========================= */
-/* ANIMACION */
-/* ========================= */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(15px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
