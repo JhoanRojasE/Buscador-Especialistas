@@ -125,6 +125,7 @@ button:hover {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
+  margin-top: 25px;
 }
 /* Cuando son instituciones solo 2 cards */
 /* .cards.instituciones {

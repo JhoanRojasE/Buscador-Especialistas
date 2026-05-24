@@ -1,24 +1,23 @@
 <div class="card" [class.clickable]="clickable" [class.single]="single">
 
-  <!-- HEADER -->
   <h3>
     <span class="material-icons">
-      {{ stats.type === 'pacientes'         ? 'groups'          :
-         stats.type === 'instituciones_esp' ? 'business'        :
-         stats.type === 'instituciones'     ? 'business'        :
-         stats.type === 'general'           ? 'analytics'       :
-         'medical_services' }}
+      {{ stats.type === 'pacientes' ? 'groups' :
+      stats.type === 'instituciones_esp' ? 'business' :
+      stats.type === 'instituciones' ? 'business' :
+      stats.type === 'general' ? 'analytics' :
+      'medical_services' }}
     </span>
     {{ stats.titulo }}
   </h3>
 
-  <!-- TOTAL -->
   <p class="total" *ngIf="stats.type !== 'instituciones'">
     <span class="material-icons">groups</span>
     Total: {{ stats.total }}
   </p>
 
-  <!-- ===================== ESPECIALIDADES ===================== -->
+  <!-- ESPECIALIDADES -->
+  <!-- ESPECIALIDADES -->
   <div class="stats-grid" *ngIf="stats.type === 'especialidades'">
     <p>
       <span class="stat-label"><span class="material-icons">female</span> Mujeres</span>
@@ -36,40 +35,53 @@
       <span class="stat-label"><span class="material-icons">cancel</span> Inactivos</span>
       <span class="stat-value">{{ stats.inactive }}</span>
     </p>
-    <p>
-      <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
-      <span class="stat-value">{{ stats.ips }}</span>
-    </p>
-    <p>
-      <span class="stat-label"><span class="material-icons">person</span> Consultorios</span>
-      <span class="stat-value">{{ stats.profesionales }}</span>
-    </p>
-    <p>
-      <span class="stat-label"><span class="material-icons">business</span> Instituciones</span>
-      <span class="stat-value">{{ stats.instituciones }}</span>
-    </p>
   </div>
 
-  <!-- ===================== INSTITUCIONES POR ESPECIALIDAD ===================== -->
+  <div class="exp-table-wrapper" *ngIf="stats.type === 'especialidades'">
+    <table class="age-table exp-table">
+      <thead>
+        <tr>
+          <th>Experiencia</th>
+          <th><span class="material-icons age-icon female-icon">female</span></th>
+          <th><span class="material-icons age-icon male-icon">male</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let g of expGroups">
+          <td>{{ g.label }}</td>
+          <td class="female-cell">{{ getExpWomen(g.key) }}</td>
+          <td class="male-cell">{{ getExpMen(g.key) }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INSTITUCIONES POR ESPECIALIDAD -->
   <div class="stats-grid" *ngIf="stats.type === 'instituciones_esp'">
     <p>
       <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
       <span class="stat-value">{{ stats.ips }}</span>
     </p>
     <p>
-      <span class="stat-label"><span class="material-icons">person</span> Consultorios</span>
+      <span class="stat-label"><span class="material-icons">person</span> Prof. Médicos</span>
       <span class="stat-value">{{ stats.profesionales }}</span>
     </p>
     <p>
-      <span class="stat-label"><span class="material-icons">business</span> Total Instituciones</span>
+      <span class="stat-label"><span class="material-icons">check_circle</span> Activas</span>
+      <span class="stat-value">{{ stats.active }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">cancel</span> Inactivas</span>
+      <span class="stat-value">{{ stats.inactive }}</span>
+    </p>
+    <p>
+      <span class="stat-label"><span class="material-icons">business</span> Total</span>
       <span class="stat-value">{{ stats.instituciones }}</span>
     </p>
   </div>
 
-  <!-- ===================== PACIENTES ===================== -->
+  <!-- PACIENTES -->
   <ng-container *ngIf="stats.type === 'pacientes'">
-
-    <!-- Resumen género -->
     <div class="stats-grid">
       <p>
         <span class="stat-label"><span class="material-icons">female</span> Mujeres</span>
@@ -88,8 +100,6 @@
         <span class="stat-value">{{ stats.inactive }}</span>
       </p>
     </div>
-
-    <!-- Tabla rangos de edad -->
     <div class="age-table-wrapper">
       <table class="age-table">
         <thead>
@@ -110,41 +120,78 @@
         </tbody>
       </table>
     </div>
-
   </ng-container>
 
-  <!-- ===================== GENERAL ===================== -->
-  <div class="stats-grid" *ngIf="stats.type === 'general'">
-    <p>
+  <!-- GENERAL -->
+  <div class="stats-grid general-grid" *ngIf="stats.type === 'general'">
+
+    <div class="stat-block">
       <span class="stat-label"><span class="material-icons">groups</span> Pacientes</span>
       <span class="stat-value">{{ stats.total }}</span>
-    </p>
-    <p>
+      <div class="stat-sub">
+        <span class="sub-item active-sub">
+          <span class="material-icons">check_circle</span>{{ stats.active }}
+        </span>
+        <span class="sub-item inactive-sub">
+          <span class="material-icons">cancel</span>{{ stats.inactive }}
+        </span>
+      </div>
+    </div>
+
+    <div class="stat-block">
       <span class="stat-label"><span class="material-icons">local_hospital</span> IPS</span>
       <span class="stat-value">{{ stats.ips }}</span>
-    </p>
-    <p>
-      <span class="stat-label"><span class="material-icons">person</span> Consultorios</span>
+      <div class="stat-sub">
+        <span class="sub-item active-sub">
+          <span class="material-icons">check_circle</span>{{ $any(stats).ipsActivas }}
+        </span>
+        <span class="sub-item inactive-sub">
+          <span class="material-icons">cancel</span>{{ $any(stats).ipsInactivas }}
+        </span>
+      </div>
+    </div>
+
+    <div class="stat-block">
+      <span class="stat-label"><span class="material-icons">person</span> Prof. Médicos</span>
       <span class="stat-value">{{ stats.profesionales }}</span>
-    </p>
-    <p>
+      <div class="stat-sub">
+        <span class="sub-item active-sub">
+          <span class="material-icons">check_circle</span>{{ $any(stats).profsActivos }}
+        </span>
+        <span class="sub-item inactive-sub">
+          <span class="material-icons">cancel</span>{{ $any(stats).profsInactivos }}
+        </span>
+      </div>
+    </div>
+
+    <div class="stat-block">
       <span class="stat-label"><span class="material-icons">business</span> Instituciones</span>
       <span class="stat-value">{{ stats.instituciones }}</span>
-    </p>
-    <p>
+      <div class="stat-sub">
+        <span class="sub-item active-sub">
+          <span class="material-icons">check_circle</span>{{ $any(stats).instsActivas }}
+        </span>
+        <span class="sub-item inactive-sub">
+          <span class="material-icons">cancel</span>{{ $any(stats).instsInactivas }}
+        </span>
+      </div>
+    </div>
+
+    <div class="stat-block">
       <span class="stat-label"><span class="material-icons">medical_services</span> Médicos</span>
       <span class="stat-value">{{ $any(stats).medicos }}</span>
-    </p>
-    <p>
+    </div>
+
+    <div class="stat-block">
       <span class="stat-label"><span class="material-icons">science</span> Especialidades</span>
       <span class="stat-value">{{ $any(stats).especialidadesCount }}</span>
-    </p>
+    </div>
+
   </div>
 
   <!-- LISTAS -->
   <ng-container *ngIf="single">
 
-    <!-- INSTITUCIONES (para tipo instituciones_esp) -->
     <ng-container *ngIf="stats.type === 'instituciones_esp' || stats.type === 'especialidades'">
       <div class="collapse-section" (click)="toggleInstituciones($event)">
         <div class="collapse-header">
@@ -171,7 +218,6 @@
       </div>
     </ng-container>
 
-    <!-- ESPECIALISTAS (para tipo especialidades) -->
     <ng-container *ngIf="stats.type === 'especialidades'">
       <div class="collapse-section" (click)="toggleEspecialistas($event)">
         <div class="collapse-header">
@@ -192,7 +238,6 @@
       </div>
     </ng-container>
 
-    <!-- PACIENTES -->
     <ng-container *ngIf="stats.type === 'pacientes'">
       <div class="collapse-section" (click)="togglePacientes($event)">
         <div class="collapse-header">
@@ -212,7 +257,6 @@
       </div>
     </ng-container>
 
-    <!-- GENERAL: instituciones + médicos -->
     <ng-container *ngIf="stats.type === 'general'">
       <div class="collapse-section" (click)="toggleInstituciones($event)">
         <div class="collapse-header">

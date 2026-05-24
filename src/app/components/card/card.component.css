@@ -242,3 +242,97 @@
   from { opacity: 0; transform: translateY(15px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* ========================= GENERAL STAT BLOCKS ========================= */
+.general-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.stat-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 8px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  min-width: 0;
+  gap: 2px;
+}
+
+.stat-block:last-child:nth-child(odd) { grid-column: 1 / -1; }
+
+.stat-block .stat-label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-block .stat-value {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  margin-top: 2px;
+}
+
+.stat-sub {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.sub-item {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 20px;
+}
+
+.sub-item .material-icons {
+  font-size: 11px !important;
+}
+
+.active-sub {
+  background: #edf7ed;
+  color: #2e7d32;
+}
+
+.active-sub .material-icons {
+  color: #2e7d32 !important;
+}
+
+.inactive-sub {
+  background: #fdecea;
+  color: #c62828;
+}
+
+.inactive-sub .material-icons {
+  color: #c62828 !important;
+}
+
+/* Tabla de Experiencia */
+.exp-table-wrapper {
+  margin-top: 14px;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #f0f0f0;
+}
+
+.exp-table thead tr {
+  background: #f0f4ff;
+  border-bottom: 2px solid #c8d5f5;
+}
+
+.exp-table thead th {
+  color: #5577cc;
+}
